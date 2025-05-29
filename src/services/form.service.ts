@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Form } from '../entities/form.entity';
 import { CreateFormDto, UpdateFormDto } from '../dtos/form.dto';
-import { toIST } from '../utils/date.util';
 
 @Injectable()
 export class FormsService {
@@ -15,25 +14,25 @@ export class FormsService {
   async create(createFormDto: CreateFormDto): Promise<any> {
     const form = this.formRepository.create(createFormDto);
     const saved = await this.formRepository.save(form);
-    return toIST(saved);
+    return saved;
   }
 
   async findAll(): Promise<any[]> {
     const forms = await this.formRepository.find();
-    return forms.map(form => toIST(form));
+    return forms;
   }
 
   async findOne(id: string): Promise<any> {
     const form = await this.formRepository.findOne({ where: { id } });
     if (!form) throw new NotFoundException(`Form with id ${id} not found`);
-    return toIST(form);
+    return form;
   }
 
   async update(id: string, updateFormDto: UpdateFormDto): Promise<any> {
     await this.findOne(id);
     await this.formRepository.update(id, updateFormDto);
     const updated = await this.findOne(id);
-    return toIST(updated);
+    return updated;
   }
 
   async remove(id: string): Promise<void> {
