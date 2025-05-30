@@ -10,8 +10,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: build image
-        run: docker build -t hardikdharmik94/surveyor-nestjs-app:latest \
-          --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} .
+        run: docker build -t hardikdharmik94/surveyor-nestjs-app:latest --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} .
       
       - name: login to dockerhub
         run: docker login -u hardikdharmik94 -p ${{secrets.DOCKER_ACCESS_TOKEN}}
