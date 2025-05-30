@@ -1,0 +1,20 @@
+name: Create and Publish Docker image
+on:
+  [workflow_dispatch, push]
+
+jobs:
+  publish_image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: build image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/surveyor-nestjs-app:latest \
+          --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} .
+      
+      - name: login to dockerhub
+        run: docker login -u hardikdharmik94 -p ${{secrets.DOCKER_ACCESS_TOKEN}}
+      
+      - name: push image to dockerhub
+        run: docker push hardikdharmik94/surveyor-nestjs-app:latest
