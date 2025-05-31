@@ -28,6 +28,7 @@ export class FormsController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.formsService.remove(id);
+    this.formsService.remove(id);
+    return {message: "Form deleted successfully !!"}
   }
 }
