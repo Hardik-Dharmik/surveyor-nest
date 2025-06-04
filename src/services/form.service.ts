@@ -39,4 +39,11 @@ export class FormsService {
     await this.findOne(id);
     await this.formRepository.delete(id);
   }
+
+  async changeStatus(id: string, isActive: boolean): Promise<any> {
+    let form = await this.findOne(id);
+    form.isActive = isActive;
+    await this.formRepository.save(form);
+    return form;
+  }
 }

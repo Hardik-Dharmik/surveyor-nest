@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { CreateFormDto, UpdateFormDto } from '../dtos/form.dto';
 import { FormsService } from '../services/form.service';
 
@@ -29,6 +37,11 @@ export class FormsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     this.formsService.remove(id);
-    return {message: "Form deleted successfully !!"}
+    return { message: 'Form deleted successfully !!' };
+  }
+
+  @Put(':id/status')
+  changeStatus(@Param('id') id: string, @Body('status') status: boolean) {
+    return this.formsService.changeStatus(id, status);
   }
 }
