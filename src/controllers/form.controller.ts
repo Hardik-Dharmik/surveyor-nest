@@ -29,6 +29,11 @@ export class FormsController {
     return this.formsService.findOne(id);
   }
 
+  @Get('fill/:id')
+  findOneForFilling(@Param('id') id: string) {
+    return this.formsService.findOneForFilling(id);
+  }
+
   @Put(':id')
   update(@Param('id') id: string, @Body() updateFormDto: UpdateFormDto) {
     return this.formsService.update(id, updateFormDto);

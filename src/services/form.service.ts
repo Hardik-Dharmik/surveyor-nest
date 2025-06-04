@@ -46,4 +46,10 @@ export class FormsService {
     await this.formRepository.save(form);
     return form;
   }
+
+  async findOneForFilling(id: string): Promise<any> {
+    const form = await this.formRepository.findOne({ where: { id } });
+    if (!form?.isActive) return {};
+    return form;
+  }
 }
