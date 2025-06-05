@@ -6,12 +6,15 @@ import { FormsModule } from './form.module';
 import { Form } from './entities/form.entity';
 
 import * as dotenv from 'dotenv';
-dotenv.config(); 
+import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UserEntity } from './entities/user.entity';
+dotenv.config();
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-     type: 'postgres',
+      type: 'postgres',
       url: process.env.DATABASE_URL,
       ssl: {
         rejectUnauthorized: false,
@@ -19,8 +22,10 @@ dotenv.config();
       autoLoadEntities: true,
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Form]),
-    FormsModule
+    TypeOrmModule.forFeature([Form, UserEntity]),
+    FormsModule,
+    UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
